@@ -9,33 +9,45 @@ class UserService{
     async findByEmail(req){
         try{
             const{ email } = req.params;
+            const{ authUser } = req;
             this.validateRequestData(email);
-            let user = await UserRepository.findByEmail(email);
+            let user = await UserRepository.findByEmail(email);           
+            this.validateUserNotFound(user);
+            this.validateAuthenticatedUser(user, authUser);            
             return{
                 status: httpStatus.SUCCESS,
                 user:{
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                }
-            }
+                },
+            };
         }catch(err){
             return{
                 status: err.status ? err.status : httpStatus.INTERNAL_SERVER_ERROR,
-                message: err.status,
-            }
+                message: err.message,
+            };
         }
     }
 
     validateRequestData(email){
-        if(!email){
-            throw new UserException(httpStatus.BAD_REQUEST,"User email was not informed.");
+        if(!email){            
+            throw new UserException(httpStatus.BAD_REQUEST,
+                 "User email was not informed.");
         }
-
     }
     validateUserNotFound(user){
+        //console.log("Validando email", email);
         if(!user){
-            throw new UserException(httpStatus.BAD_REQUEST,"User not found.");
+            throw new UserException(httpStatus.BAD_REQUEST, "User not found.");
+        }
+    }
+
+    validateAuthenticatedUser(user, authUser){
+        if(!authUser || user.id !== authUser.id){
+            throw new UserException(
+                httpStatus.FORBIDDEN, "You cannot see user data."
+            );
         }
 
     }

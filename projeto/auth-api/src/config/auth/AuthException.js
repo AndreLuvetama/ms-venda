@@ -1,9 +1,8 @@
 class AuthException extends Error{
     constructor(status, message){
-        super(message);
+            super(message);
             this.status = status;
-            this.message = message;
-            
+            this.message = message;            
             this.name = this.constructor.name;            
            
            Error.captureStackTrace(this.constructor);           
