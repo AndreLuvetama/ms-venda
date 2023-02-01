@@ -1,8 +1,9 @@
 import Sequelize from "sequelize";
 import sequelize from "../../../config/db/dbconfig.js";
 
+//Definição dos dados para criação da tab user no BD 'tab user'
 const User = sequelize.define("user", {
-    userid:{
+    id:{
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,

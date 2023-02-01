@@ -13,7 +13,8 @@ class UserService{
             this.validateRequestData(email);
             let user = await UserRepository.findByEmail(email);           
             this.validateUserNotFound(user);
-            this.validateAuthenticatedUser(user, authUser);            
+            this.validateAuthenticatedUser(user, authUser);
+            console.log("Validando a authUser", authUser);            
             return{
                 status: httpStatus.SUCCESS,
                 user:{
@@ -43,24 +44,16 @@ class UserService{
         }
     }
 
-    validateAuthenticatedUser(user, authUser){
-        if(!authUser || user.id !== authUser.id){
-            throw new UserException(
-                httpStatus.FORBIDDEN, "You cannot see user data."
-            );
-        }
-
-    }
-
+    
     async getAccessToken(req){
         try{
             const { email, password } = req.body; // Estão no Body        
-            this.validateAccessTokenData(email, password)                                                                                                                                                                   
-            let user = await UserRepository.findByEmail(email)
+            this.validateAccessTokenData(email, password);                                                                                                                                                                   
+            let user = await UserRepository.findByEmail(email);
             this.validateUserNotFound(user);
             await this.validatePassword(password, user.password);
             const authUser = {id: user.id, name: user.name, email: user.email};
-            const accessToken = jwt.sign({authUser}, secrets.API_SECRET, {expiresIn: "1d"});
+            const accessToken = jwt.sign({authUser}, secrets.API_SECRET, {expiresIn: "1d",});
             return{
                 status: httpStatus.SUCCESS,
                 accessToken, 
@@ -73,10 +66,18 @@ class UserService{
         }
     }
 
+    validateAuthenticatedUser(user, authUser){
+        console.log("Validando a authUser 1", user.id);  
+        if(!authUser || (user.id !== authUser.id)){
+            throw new UserException(
+                httpStatus.FORBIDDEN, "You cannot see user data."
+            );
+        }
+    }
 
     validateAccessTokenData(email, password){
         if(!email || !password){
-            throw new UserException(httpStatus.ANAUTHORIZED, "Email and password mus be informed");
+            throw new UserException(httpStatus.ANAUTHORIZED, "Email and password must be informed");
         }
     }    
     async validatePassword(password, hashPassword){

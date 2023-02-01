@@ -4,7 +4,6 @@ class UserException extends Error{
         this.status = status;
         this.message = message;            
         this.name = this.constructor.name;            
-       console.log("Estou no midle", this.message);
        Error.captureStackTrace(this.constructor);           
     
   }
