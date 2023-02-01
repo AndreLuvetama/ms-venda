@@ -1,0 +1,15 @@
+Criar image no docker
+docker run -p 5432:5432 -e POSTGRES_PASSWORD=1234 postgres
+
+docker run --name auth-db  -p 5432:5432 -e POSTGRES_DB=auth-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=sa123 postgres:11
+docker run --name product-db  -p 5433:5432 -e POSTGRES_DB=product-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=sa123 postgres:11
+
+MongoDB
+docker run --name sales-db  -p 27017:27017 -p 28017:28017 -e MONGODB_USER="admin" -e MONGODB_DB="sales" -e MONGODB_PASS="sa123" tutum/mongodb
+uri db: mongodb://admin:sa123@localhost:27017/sales
+
+RabbitMQ
+sudo docker run --name sales_rabbit -p 5672:5672 -p 25676:25676 -p 15672:15672 rabbitmq:3-management
+
+
+

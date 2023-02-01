@@ -1,0 +1,5 @@
+server:
+  port: ${PORT:8081} #seta a porta 8081 se ela não for definida
+spring:
+  application:
+    name: product-api
