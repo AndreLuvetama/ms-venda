@@ -1,11 +1,16 @@
 package com.br.productapi.model;
 
+import com.br.productapi.dto.ProductRequest;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
+@Builder
 @Data
 @AllArgsConstructor
 @Entity
@@ -29,4 +34,28 @@ public class Product {
 
     @Column(name = "QUANTITY_AVAILABLE", nullable = false)
     private Integer quantityAvailable;
+
+
+    //Data da criação e nunca será atualizada
+
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createAt;
+    @PrePersist
+    public void prePersist(){
+        createAt = LocalDateTime.now();
+    }
+
+    //Metodo de transformação
+
+    public static Product of(ProductRequest request, Supplier supplier, Category category){
+        return Product
+                .builder()
+                .name(request.getName())
+                .quantityAvailable(request.getQuantityAvailable())
+                .supplier(supplier)
+                .category(category)
+                .build();
+
+    }
 }

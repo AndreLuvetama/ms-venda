@@ -17,10 +17,15 @@ spring:
   jpa:
     #show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+      #ddl-auto: update
       format_sql: true
     show_sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+   ## Correção do erro the dependencies of some of the beans in the application context form a cycle spring boot
+  main:
+    allow-circular-references: true
 
