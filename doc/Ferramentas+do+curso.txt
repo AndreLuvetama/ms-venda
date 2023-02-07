@@ -16,4 +16,8 @@ DBeaver: https://dbeaver.io/download/
 
 Node.js: https://nodejs.org/en/
 
+
+Decoders
+https://www.base64decode.org/
+
 MongoShell: https://www.mongodb.com/try/download/shell

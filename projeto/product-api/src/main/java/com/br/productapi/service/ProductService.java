@@ -6,6 +6,7 @@ import com.br.productapi.dto.*;
 import com.br.productapi.model.Product;
 import com.br.productapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,10 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
+    @Lazy
     private SupplierService supplierService;
     @Autowired
+    @Lazy
     private CategoryService categoryService;
 
     public ProductResponse save(ProductRequest request){

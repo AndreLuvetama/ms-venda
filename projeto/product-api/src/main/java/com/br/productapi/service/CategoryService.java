@@ -7,6 +7,7 @@ import com.br.productapi.dto.CategoryResponse;
 import com.br.productapi.model.Category;
 import com.br.productapi.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -20,6 +21,7 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Lazy
     @Autowired
     private ProductService productService;
 
@@ -68,7 +70,7 @@ public class CategoryService {
     }
 
 
-    public void validateCategoryNameInformed(CategoryRequest request) {
+    private void validateCategoryNameInformed(CategoryRequest request) {
         if(ObjectUtils.isEmpty(request.getDescription())){
             throw new ValidationException("The category  description was not informed");
         }
