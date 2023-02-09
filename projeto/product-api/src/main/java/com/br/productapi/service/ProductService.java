@@ -143,4 +143,7 @@ public class ProductService {
             throw new ValidationException("The product's ID must be informed");
         }
     }
+    public void updateProductStock(ProductStockDTO productStockDTO){
+
+    }
 }
