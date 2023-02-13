@@ -59,4 +59,14 @@ public class ProductController {
     public ProductResponse update(@RequestBody ProductRequest request, @PathVariable Integer id){
         return productService.update(request, id);
     }
+
+    @PostMapping("check-stock")
+    public SuccesResponse checkProductStock(@RequestBody ProductCheckStockRequest request){
+        return productService.checkProductsStock(request);
+    }
+
+    @GetMapping("{d}/sales")
+    public ProductSalesResponse findProductSales(@PathVariable Integer id){
+        return productService.findProductSales(id);
+    }
 }
